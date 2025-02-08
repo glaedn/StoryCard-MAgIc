@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { generateContent } from "../services/llmApi"; // Import the generateContent function from llmAPI.js
+import { generateContent } from "../services/llmApi";
 import "./CardGame.css";
 
 function CardGame() {
@@ -10,9 +10,9 @@ function CardGame() {
   const [userClass, setUserClass] = useState("Fighter");
 
   const [storyText, setStoryText] = useState("");
-  //const [options, setOptions] = useState([]);
   const [cards, setCards] = useState([]);
-  //const [conversation, setConversation] = useState([]);
+  const [choiceCount, setChoiceCount] = useState(0);
+  const [conversation, setConversation] = useState([]); // Holds the last 3 choices and story responses
 
   const handleNewStory = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ function CardGame() {
     const prompt = `
 You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story with the following format:
 
-<Story>
+Story text here
  
 || (Paragon) <Lawful good response> 
 
@@ -33,7 +33,7 @@ You are generating a story 5-8 sentences at a time, then generating 5 user respo
 || (Inquisitor) <Lawful evil response>
 
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
-Each story arc should take at least 24 prompts, two for each step in the hero's journey. 
+Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
 Once one journey is complete, start the character on a new quest. 
 Please remember to include || delimiters between each section of the response
 
@@ -47,20 +47,17 @@ Generate a new story accordingly.
 `;
 
     try {
-      const rawText = await generateContent(prompt); // Call generateContent and pass the prompt
+      const rawText = await generateContent(prompt);
       if (rawText) {
-        // Split the raw response by the '||' delimiter
         const parts = rawText.split("||").map(part => part.trim());
+        const story = parts[0];
+        const parsedOptions = parts.slice(1, 6);
 
-        // The first part is the story, and the next 5 parts are the options
-        const story = parts[0]; // Everything before the first '||' is the story text
-        const parsedOptions = parts.slice(1, 6); // The next 5 parts are the options
+        setStoryText(story);
+        setCards(parsedOptions.map((opt) => opt));
 
-        setStoryText(story); // Set the story text
-        //setOptions(parsedOptions); // Set the options array
-        setCards(parsedOptions.map((opt) => opt)); // Set the cards to the 5 options
-
-        //setConversation((prev) => [...prev, { prompt, response: rawText }]);
+        // Update conversation history
+        setConversation([{ userChoice: "Start of Story", response: story }]);
       } else {
         console.error("Failed to generate story.");
       }
@@ -69,19 +66,12 @@ Generate a new story accordingly.
     }
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-    const reorderedCards = Array.from(cards);
-    const [removed] = reorderedCards.splice(result.source.index, 1);
-    reorderedCards.splice(result.destination.index, 0, removed);
-    setCards(reorderedCards);
-  };
-
   const handleCardClick = async (selectedText) => {
+    setChoiceCount((prevCount) => prevCount + 1);
     const prompt = `
   You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story. The responses must follow this exact format, where each option is separated by '||':
   
-  <Story Text>
+  Story Text Here
   
   || (Paragon) <Lawful good response> 
   
@@ -100,24 +90,29 @@ Generate a new story accordingly.
   The user selected: "${selectedText}"
   
   Your task is to continue the story based on the user’s selection and include five response options, each on a new line and separated by '||', as shown above.
-  Each option must be a different character's potential action or response to the current situation.
+  The user has made ${choiceCount + 1} choices so far. Use this count to guide the story arc through the hero's journey, 2-3 choices should be enough to move to the next step in the journey. 
+  Each story arc should take at least 20 prompts.
+  Once one journey is complete, start the character on a new quest. 
+  Continue accordingly and adapt the story for the current step.
+  Try to keep the tone of each response option within the frame of the story setting.
   `;
-  
+
     try {
-      const rawText = await generateContent(prompt); // Call generateContent and pass the prompt
+      const rawText = await generateContent(prompt);
       if (rawText) {
-        // Split the raw response by the '||' delimiter
         const parts = rawText.split("||").map(part => part.trim());
-  
-        // The first part is the story, and the next 5 parts are the options
-        const story = parts[0]; // Everything before the first '||' is the story text
-        const parsedOptions = parts.slice(1, 6); // The next 5 parts are the options
-  
-        setStoryText(story); // Set the new story text
-        //setOptions(parsedOptions); // Set the new options
-        setCards(parsedOptions.map((opt) => opt)); // Set the new cards
-  
-        //setConversation((prev) => [...prev, { prompt, response: rawText }]);
+        const story = parts[0];
+        const parsedOptions = parts.slice(1, 6);
+
+        setStoryText(story);
+        setCards(parsedOptions.map((opt) => opt));
+
+        // Update conversation history
+        setConversation((prev) => {
+          const newEntry = { userChoice: selectedText, response: story };
+          const updatedHistory = [...prev, newEntry];
+          return updatedHistory;
+        });
       } else {
         console.error("Failed to continue story.");
       }
@@ -125,7 +120,14 @@ Generate a new story accordingly.
       console.error("Error processing card click:", error);
     }
   };
-  
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const reorderedCards = Array.from(cards);
+    const [removed] = reorderedCards.splice(result.source.index, 1);
+    reorderedCards.splice(result.destination.index, 0, removed);
+    setCards(reorderedCards);
+  };
 
   return (
     <div className="card-game">
@@ -153,17 +155,25 @@ Generate a new story accordingly.
           <select value={setting} onChange={(e) => setSetting(e.target.value)}>
             <option value="present day">Present Day</option>
             <option value="fantasy">Fantasy</option>
-            <option value="sci-fi">Sci-Fi</option>
+            <option value="sci-fi space">Sci-Fi Space</option>
             <option value="near-future">Near-Future</option>
+            <option value="present day office">Present Day Office</option>
+            <option value="high fantasy court">High Fantasy Court</option>
+            <option value="sci-fi city">Sci-Fi City</option>
+            <option value="near-future science facility">Near-Future Lab</option>
           </select>
         </label>
         <label>
           Class:
           <select value={userClass} onChange={(e) => setUserClass(e.target.value)}>
+            <option value="Astronaut">Astronaut</option>
+            <option value="Actor">Actor</option>
+            <option value="Musician">Musician</option>
+            <option value="Inventor">Inventor</option>
             <option value="Fighter">Fighter</option>
             <option value="Healer">Healer</option>
             <option value="Rogue">Rogue</option>
-            <option value="Mage">Mage</option>
+            <option value="Magician">Magician</option>
           </select>
         </label>
         <button type="submit">Generate New Story</button>
@@ -204,6 +214,18 @@ Generate a new story accordingly.
             )}
           </Droppable>
         </DragDropContext>
+      </div>
+
+      <div className="conversation-container">
+        <h2>Conversation History</h2>
+        <ul>
+          {conversation.map((entry, index) => (
+            <li key={index}>
+              <strong>Choice:</strong> {entry.userChoice} <br />
+              <strong>Response:</strong> {entry.response}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
