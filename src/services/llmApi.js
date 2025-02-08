@@ -3,7 +3,7 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Initialize the Google Generative AI client with your API key
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GOOGLE_SECRET_KEYgo);
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GOOGLE_SECRET_KEY);
 
 // Select the Gemini 2.0 Flash model
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
