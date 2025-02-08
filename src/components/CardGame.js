@@ -10,9 +10,9 @@ function CardGame() {
   const [userClass, setUserClass] = useState("Fighter");
 
   const [storyText, setStoryText] = useState("");
-  const [options, setOptions] = useState([]);
+  //const [options, setOptions] = useState([]);
   const [cards, setCards] = useState([]);
-  const [conversation, setConversation] = useState([]);
+  //const [conversation, setConversation] = useState([]);
 
   const handleNewStory = async (e) => {
     e.preventDefault();
@@ -57,10 +57,10 @@ Generate a new story accordingly.
         const parsedOptions = parts.slice(1, 6); // The next 5 parts are the options
 
         setStoryText(story); // Set the story text
-        setOptions(parsedOptions); // Set the options array
+        //setOptions(parsedOptions); // Set the options array
         setCards(parsedOptions.map((opt) => opt)); // Set the cards to the 5 options
 
-        setConversation((prev) => [...prev, { prompt, response: rawText }]);
+        //setConversation((prev) => [...prev, { prompt, response: rawText }]);
       } else {
         console.error("Failed to generate story.");
       }
@@ -114,10 +114,10 @@ Generate a new story accordingly.
         const parsedOptions = parts.slice(1, 6); // The next 5 parts are the options
   
         setStoryText(story); // Set the new story text
-        setOptions(parsedOptions); // Set the new options
+        //setOptions(parsedOptions); // Set the new options
         setCards(parsedOptions.map((opt) => opt)); // Set the new cards
   
-        setConversation((prev) => [...prev, { prompt, response: rawText }]);
+        //setConversation((prev) => [...prev, { prompt, response: rawText }]);
       } else {
         console.error("Failed to continue story.");
       }
