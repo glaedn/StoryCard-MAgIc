@@ -12,7 +12,7 @@ function CardGame() {
   const [storyText, setStoryText] = useState("");
   const [cards, setCards] = useState([]);
   const [choiceCount, setChoiceCount] = useState(0);
-  const [conversation, setConversation] = useState([]); // Holds the last 3 choices and story responses
+  const [conversation, setConversation] = useState([]);
 
   const handleNewStory = async (e) => {
     e.preventDefault();
@@ -22,15 +22,17 @@ You are generating a story 5-8 sentences at a time, then generating 5 user respo
 
 Story text here
  
-|| (Paragon) <Lawful good response> 
+  ||  <Lawful good response> 
 
-|| (Rebel Good) <Chaotic good response>
-
-|| (Neutral) <Chaotic neutral response>
-
-|| (Rebel Evil) <Chaotic evil response>
-
-|| (Inquisitor) <Lawful evil response>
+  ||  <Neutral good response>
+  
+  ||  <Chaotic good response>
+  
+  ||  <Chaotic neutral response>
+  
+  ||  <Chaotic evil response>
+  
+  ||  <Lawful evil response>
 
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
 Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
@@ -51,10 +53,11 @@ Generate a new story accordingly.
       if (rawText) {
         const parts = rawText.split("||").map(part => part.trim());
         const story = parts[0];
-        const parsedOptions = parts.slice(1, 6);
+        const parsedOptions = parts.slice(1, 7);
 
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
+        
 
         // Update conversation history
         setConversation([{ userChoice: "Start of Story", response: story }]);
@@ -73,15 +76,17 @@ Generate a new story accordingly.
   
   Story Text Here
   
-  || (Paragon) <Lawful good response> 
+  ||  <Lawful good response> 
+
+  ||  <Neutral good response>
   
-  || (Rebel Good) <Chaotic good response>
+  ||  <Chaotic good response>
   
-  || (Neutral) <Chaotic neutral response>
+  ||  <Chaotic neutral response>
   
-  || (Rebel Evil) <Chaotic evil response>
+  ||  <Chaotic evil response>
   
-  || (Inquisitor) <Lawful evil response>
+  ||  <Lawful evil response>
   
   User input:
   The current story is as follows:
@@ -102,7 +107,7 @@ Generate a new story accordingly.
       if (rawText) {
         const parts = rawText.split("||").map(part => part.trim());
         const story = parts[0];
-        const parsedOptions = parts.slice(1, 6);
+        const parsedOptions = parts.slice(1, 7);
 
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
@@ -160,7 +165,9 @@ Generate a new story accordingly.
             <option value="present day office">Present Day Office</option>
             <option value="high fantasy court">High Fantasy Court</option>
             <option value="sci-fi city">Sci-Fi City</option>
-            <option value="near-future science facility">Near-Future Lab</option>
+            <option value="near-future science facility">
+              Near-Future Lab
+            </option>
           </select>
         </label>
         <label>
@@ -196,12 +203,12 @@ Generate a new story accordingly.
               >
                 {cards.map((cardText, index) => (
                   <Draggable key={cardText + index} draggableId={cardText + index} index={index}>
-                    {(provided, snapshot) => (
+                    {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`card ${snapshot.isDragging ? "dragging" : ""}`}
+                        className="card"
                         onClick={() => handleCardClick(cardText)}
                       >
                         {cardText}
