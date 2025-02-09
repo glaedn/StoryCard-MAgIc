@@ -100,6 +100,11 @@ Generate a new story accordingly.
   Once one journey is complete, start the character on a new quest. 
   Continue accordingly and adapt the story for the current step.
   Try to keep the tone of each response option within the frame of the story setting.
+  User inputs:
+  Protagonist: ${protagonist}
+  Antagonist: ${antagonist || "None"}
+  Setting: ${setting}
+  Class: ${userClass}
   `;
 
     try {
