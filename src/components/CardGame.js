@@ -96,7 +96,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   
   ||  <Lawful evil response>
 
-  || Full plot summary here (inckude future plot)
+  || Full plot summary here (include future plot)
   
   User input:
   The current story is as follows:
@@ -127,8 +127,8 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
       if (rawText) {
         const parts = rawText.split("||").map(part => part.trim());
         const story = parts[0];
-        const parsedOptions = parts.slice(1, 6);
-        const summary = parts.slice(7);
+        const parsedOptions = parts.slice(1, 7);
+        const summary = parts[7];
         console.log(rawText);
         console.log(summary);
 
