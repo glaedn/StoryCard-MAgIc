@@ -14,6 +14,7 @@ function CardGame() {
   const [cards, setCards] = useState([]);
   const [choiceCount, setChoiceCount] = useState(0);
   const [conversation, setConversation] = useState([]);
+  const [subgenre, setSubgenre] = useState("");
 
   const subgenres = [
     "comedy", "rom-com", "romance", "thriller", "horror", "slasher",
@@ -24,7 +25,7 @@ function CardGame() {
     return subgenres[Math.floor(Math.random() * subgenres.length)];
   };
 
-  const subgenre = getRandomSubgenre();
+  subgenre = getRandomSubgenre();
 
   const handleNewStory = async (e) => {
     e.preventDefault();
@@ -111,7 +112,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   Your task is to continue the story based on the user’s selection and include five response options, each on a new line and separated by '||', as shown above.
   The user has made ${choiceCount + 1} choices so far. Use this count to guide the story arc. 
   Each story arc should take at least 20 prompts.
-  Make sure each response you generate is from the perspective of ${protagonist}.
+  Responses should *only* be from the perspective of ${protagonist} this is a first person interactive experience, treat responses accordingly.
   Once one journey is complete, start the character on a new quest. 
   Continue accordingly and adapt the story for the current count of choices.
   Use tone appropriate for the ${setting} setting and ${subgenre} subgenre.
@@ -190,6 +191,22 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
             <option value="near-future science facility">
               Near-Future Lab
             </option>
+          </select>
+        </label>
+        <label>
+          Subgenre:
+          <select value={subgenre} onChange={(e) => setSubgenre(e.target.value)}>
+            <option value="comedy">Astronaut</option>
+            <option value="rom-com">Actor</option>
+            <option value="romance">Musician</option>
+            <option value="thriller">Inventor</option>
+            <option value="horror">Fighter</option>
+            <option value="slasher">Healer</option>
+            <option value="tragedy">Rogue</option>
+            <option value="tragic comedy">Magician</option>
+            <option value="comedy of errors">Healer</option>
+            <option value="adventure">Rogue</option>
+            <option value="action">Magician</option>
           </select>
         </label>
         <label>
