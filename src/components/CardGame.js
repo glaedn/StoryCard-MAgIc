@@ -14,11 +14,21 @@ function CardGame() {
   const [choiceCount, setChoiceCount] = useState(0);
   const [conversation, setConversation] = useState([]);
 
+  const subgenres = [
+    "comedy", "rom-com", "romance", "thriller", "horror", "slasher",
+    "tragedy", "tragic comedy", "comedy of errors", "adventure", "action"
+  ];
+
+  const getRandomSubgenre = () => {
+    return subgenres[Math.floor(Math.random() * subgenres.length)];
+  };
+
   const handleNewStory = async (e) => {
     e.preventDefault();
+    const subgenre = getRandomSubgenre();
 
     const prompt = `
-You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story with the following format:
+You are generating a story 5-8 sentences at a time in the ${subgenre} genre, then generating 5 user responses below the story with the following format:
 
 Story text here
  
@@ -57,7 +67,7 @@ Generate a new story accordingly.
 
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
-        
+        console.log(subgenre)
 
         // Update conversation history
         setConversation([{ userChoice: "Start of Story", response: story }]);
@@ -105,6 +115,7 @@ Generate a new story accordingly.
   Antagonist: ${antagonist || "None"}
   Setting: ${setting}
   Class: ${userClass}
+  Subgenre: ${subgenre}
   `;
 
     try {
