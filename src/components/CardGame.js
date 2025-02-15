@@ -80,7 +80,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   const handleCardClick = async (selectedText) => {
     setChoiceCount((prevCount) => prevCount + 1);
     const prompt = `
-  You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story. The responses must follow this exact format, where each option is separated by '||':
+  You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story, then a short summary of the plot below that. The responses must follow this exact format, where each option is separated by '||':
   
   Story Text Here
   
