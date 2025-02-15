@@ -131,6 +131,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
         setStoryline(summary);
+        console.log(storyline);
 
         // Update conversation history
         setConversation((prev) => {
