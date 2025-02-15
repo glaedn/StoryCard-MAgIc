@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { generateContent } from "../services/llmApi";
+import ReactMarkdown from 'react-markdown';
 import "./CardGame.css";
 
 function CardGame() {
@@ -236,7 +237,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
 
       <div className="story-container">
         <h2>Story</h2>
-        <p>{storyText}</p>
+        <ReactMarkdown>{storyText}</ReactMarkdown>
       </div>
 
       <div className="options-container">
