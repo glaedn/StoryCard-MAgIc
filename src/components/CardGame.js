@@ -13,6 +13,7 @@ function CardGame() {
   const [cards, setCards] = useState([]);
   const [choiceCount, setChoiceCount] = useState(0);
   const [conversation, setConversation] = useState([]);
+  const subgenre = getRandomSubgenre();
 
   const subgenres = [
     "comedy", "rom-com", "romance", "thriller", "horror", "slasher",
@@ -25,7 +26,6 @@ function CardGame() {
 
   const handleNewStory = async (e) => {
     e.preventDefault();
-    const subgenre = getRandomSubgenre();
 
     const prompt = `
 You are generating a story 5-8 sentences at a time in the ${subgenre} genre, then generating 5 user responses below the story with the following format:
