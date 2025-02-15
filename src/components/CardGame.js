@@ -22,7 +22,7 @@ function CardGame() {
     e.preventDefault();
 
     const prompt = `
-You are generating a story 5-8 sentences at a time in the ${subgenre} genre, 
+You are generating an interactive story game 5-8 sentences at a time in the ${subgenre} genre, 
 then generating 5 user responses below the story, then a summary of the plot so far with the following format:
 
 Story text here
@@ -39,7 +39,10 @@ Story text here
   
   ||  <Lawful evil response>
 
-  || Full plot summary here (include future plot)
+  || Full plot summary here (include past and future plot) and use the following format:
+     Key Items: <ITEM1>, <ITEM2>, etc.
+     Characters: <CHARACTER NAME> - <CHARACTER DESCRIPTION>
+     Plot summary
 
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
 Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
@@ -80,7 +83,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   const handleCardClick = async (selectedText) => {
     setChoiceCount((prevCount) => prevCount + 1);
     const prompt = `
-  You are generating a story 5-8 sentences at a time, then generating 5 user responses below the story, then a short summary of the plot below that. The responses must follow this exact format, where each option is separated by '||':
+  You are generating an interactive story game 5-8 sentences at a time, then generating 5 user responses below the story, then a short summary of the plot below that. The responses must follow this exact format, where each option is separated by '||':
   
   Story Text Here
   
@@ -96,7 +99,10 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   
   ||  <Lawful evil response>
 
-  || Full plot summary here (include future plot)
+  || Full plot summary here (include past and future plot) and use the following format:
+     Key Items: <ITEM1>, <ITEM2>, etc.
+     Characters: <CHARACTER NAME> - <CHARACTER DESCRIPTION>, <CH. Name2> - <CH DESC. 2> etc.
+     Plot summary
   
   User input:
   The current story is as follows:
