@@ -8,6 +8,7 @@ function CardGame() {
   const [antagonist, setAntagonist] = useState("");
   const [setting, setSetting] = useState("present day");
   const [userClass, setUserClass] = useState("Fighter");
+  const [gender, setGender] = useState("Nonbinary");
 
   const [storyText, setStoryText] = useState("");
   const [cards, setCards] = useState([]);
@@ -29,7 +30,8 @@ function CardGame() {
     e.preventDefault();
 
     const prompt = `
-You are generating a story 5-8 sentences at a time in the ${subgenre} genre, then generating 5 user responses below the story with the following format:
+You are generating a story 5-8 sentences at a time in the ${subgenre} genre, 
+then generating 5 user responses below the story with the following format:
 
 Story text here
  
@@ -55,8 +57,9 @@ Protagonist: ${protagonist}
 Antagonist: ${antagonist || "None"}
 Setting: ${setting}
 Class: ${userClass}
+Gender: ${gender}
 
-Generate a new story accordingly.
+Generate a new story accordingly. Use tone and language appropriate to the setting and subgenre.
 `;
 
     try {
@@ -106,17 +109,19 @@ Generate a new story accordingly.
   The user selected: "${selectedText}"
   
   Your task is to continue the story based on the user’s selection and include five response options, each on a new line and separated by '||', as shown above.
-  The user has made ${choiceCount + 1} choices so far. Use this count to guide the story arc through the hero's journey, 2-3 choices should be enough to move to the next step in the journey. 
+  The user has made ${choiceCount + 1} choices so far. Use this count to guide the story arc. 
   Each story arc should take at least 20 prompts.
+  Make sure each response you generate is from the perspective of ${protagonist}.
   Once one journey is complete, start the character on a new quest. 
-  Continue accordingly and adapt the story for the current step.
-  Try to keep the tone of each response option within the frame of the story setting.
+  Continue accordingly and adapt the story for the current count of choices.
+  Use tone appropriate for the ${setting} setting and ${subgenre} subgenre.
   User inputs:
   Protagonist: ${protagonist}
   Antagonist: ${antagonist || "None"}
   Setting: ${setting}
   Class: ${userClass}
   Subgenre: ${subgenre}
+  Gender: ${gender}
   `;
 
     try {
@@ -198,6 +203,14 @@ Generate a new story accordingly.
             <option value="Healer">Healer</option>
             <option value="Rogue">Rogue</option>
             <option value="Magician">Magician</option>
+          </select>
+        </label>
+        <label>
+          Gender:
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="Masculine">Masculine</option>
+            <option value="Feminine">Feminine</option>
+            <option value="Nonbinary">Nonbinary</option>
           </select>
         </label>
         <button type="submit">Generate New Story</button>
