@@ -101,6 +101,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   Your task is to continue the story based on the user’s selection and include five response options, each on a new line and separated by '||', as shown above.
   The user has made ${choiceCount + 1} choices so far. Use this count to guide the story arc. 
   Each story arc should take at least 20 prompts.
+  The story section should only contain new text, don't include anything from the current story.
   Responses should *only* be from the perspective of ${protagonist} this is a first person interactive experience, treat responses accordingly.
   Once one journey is complete, start the character on a new quest. 
   Continue accordingly and adapt the story for the current count of choices.
