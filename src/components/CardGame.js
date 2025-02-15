@@ -127,9 +127,12 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
         const story = parts[0];
         const parsedOptions = parts.slice(1, 7);
         const summary = parts.slice(8);
+        console.log(rawText);
+        console.log(summary);
 
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
+        setStoryline("");
         setStoryline(summary);
         console.log(storyline);
 
