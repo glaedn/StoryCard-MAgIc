@@ -185,17 +185,17 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
         <label>
           Subgenre:
           <select value={subgenre} onChange={(e) => setSubgenre(e.target.value)}>
-            <option value="comedy">Astronaut</option>
-            <option value="rom-com">Actor</option>
-            <option value="romance">Musician</option>
-            <option value="thriller">Inventor</option>
-            <option value="horror">Fighter</option>
-            <option value="slasher">Healer</option>
-            <option value="tragedy">Rogue</option>
-            <option value="tragic comedy">Magician</option>
-            <option value="comedy of errors">Healer</option>
-            <option value="adventure">Rogue</option>
-            <option value="action">Magician</option>
+            <option value="comedy">Comedy</option>
+            <option value="rom-com">Romantic Comedy</option>
+            <option value="romance">Romance</option>
+            <option value="thriller">Thriller</option>
+            <option value="horror">Horror</option>
+            <option value="slasher">Slasher</option>
+            <option value="tragedy">Tragedy</option>
+            <option value="tragic comedy">Tragic Comedy</option>
+            <option value="comedy of errors">Comedy of Errors</option>
+            <option value="adventure">Adventure</option>
+            <option value="action">Action</option>
           </select>
         </label>
         <label>
