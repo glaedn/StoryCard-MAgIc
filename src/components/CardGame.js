@@ -16,17 +16,6 @@ function CardGame() {
   const [conversation, setConversation] = useState([]);
   const [subgenre, setSubgenre] = useState("");
 
-  const subgenres = [
-    "comedy", "rom-com", "romance", "thriller", "horror", "slasher",
-    "tragedy", "tragic comedy", "comedy of errors", "adventure", "action"
-  ];
-
-  const getRandomSubgenre = () => {
-    return subgenres[Math.floor(Math.random() * subgenres.length)];
-  };
-
-  subgenre = getRandomSubgenre();
-
   const handleNewStory = async (e) => {
     e.preventDefault();
 
