@@ -15,6 +15,7 @@ function CardGame() {
   const [choiceCount, setChoiceCount] = useState(0);
   const [conversation, setConversation] = useState([]);
   const [subgenre, setSubgenre] = useState("");
+  const [storyline, setStoryline] = useState("");
 
   const handleNewStory = async (e) => {
     e.preventDefault();
@@ -37,6 +38,8 @@ Story text here
   
   ||  <Lawful evil response>
 
+  || Story summary here
+
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
 Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
 Once one journey is complete, start the character on a new quest. 
@@ -47,7 +50,7 @@ Protagonist: ${protagonist}
 Antagonist: ${antagonist || "None"}
 Setting: ${setting}
 Class: ${userClass}
-Gender: ${gender}
+Protagonist's Gender: ${gender}
 
 Generate a new story accordingly. Use tone and language appropriate to the setting and subgenre.
 `;
@@ -91,10 +94,12 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   ||  <Chaotic evil response>
   
   ||  <Lawful evil response>
+
+  || Story summary here
   
   User input:
   The current story is as follows:
-  ${storyText}
+  ${storyline}
   
   The user selected: "${selectedText}"
   
@@ -112,7 +117,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   Setting: ${setting}
   Class: ${userClass}
   Subgenre: ${subgenre}
-  Gender: ${gender}
+  Protagonist's Gender: ${gender}
   `;
 
     try {
@@ -121,9 +126,11 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
         const parts = rawText.split("||").map(part => part.trim());
         const story = parts[0];
         const parsedOptions = parts.slice(1, 7);
+        const summary = parts.slice(8);
 
         setStoryText(story);
         setCards(parsedOptions.map((opt) => opt));
+        setStoryline(summary);
 
         // Update conversation history
         setConversation((prev) => {
