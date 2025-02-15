@@ -39,7 +39,7 @@ Story text here
   
   ||  <Lawful evil response>
 
-  || Story summary here
+  || Full plot summary here (include future plot)
 
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
 Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
@@ -96,7 +96,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   
   ||  <Lawful evil response>
 
-  || Story summary here
+  || Full plot summary here (inckude future plot)
   
   User input:
   The current story is as follows:
@@ -127,8 +127,8 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
       if (rawText) {
         const parts = rawText.split("||").map(part => part.trim());
         const story = parts[0];
-        const parsedOptions = parts.slice(1, 7);
-        const summary = parts.slice(8);
+        const parsedOptions = parts.slice(1, 6);
+        const summary = parts.slice(7);
         console.log(rawText);
         console.log(summary);
 
