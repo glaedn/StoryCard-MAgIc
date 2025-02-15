@@ -23,7 +23,7 @@ function CardGame() {
 
     const prompt = `
 You are generating a story 5-8 sentences at a time in the ${subgenre} genre, 
-then generating 5 user responses below the story with the following format:
+then generating 5 user responses below the story, then a summary of the plot so far with the following format:
 
 Story text here
  
@@ -44,7 +44,7 @@ Story text here
 Remember that each response should be something the user's character says and does, not a response to the user's character. 
 Each story arc should take at least 20 prompts, two for each step in the hero's journey. 
 Once one journey is complete, start the character on a new quest. 
-Please remember to include || delimiters between each section of the response
+Please remember to include || delimiters between each section of the response. Don't forget the summary at the end!
 
 User inputs:
 Protagonist: ${protagonist}
@@ -112,6 +112,7 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   Once one journey is complete, start the character on a new quest. 
   Continue accordingly and adapt the story for the current count of choices.
   Use tone appropriate for the ${setting} setting and ${subgenre} subgenre.
+  Don't forget the summary at the end! We need that so you can be passed back a plot summary.
   User inputs:
   Protagonist: ${protagonist}
   Antagonist: ${antagonist || "None"}
