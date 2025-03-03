@@ -99,10 +99,12 @@ Generate a new story accordingly. Use tone and language appropriate to the setti
   
   ||  <Lawful evil response>
 
-  || Full plot summary here (include past and future plot) and use the following format:
-     Key Items: <ITEM1>, <ITEM2>, etc.
-     Characters: <CHARACTER NAME> - <CHARACTER DESCRIPTION>, <CH. Name2> - <CH DESC. 2> etc.
-     Plot summary
+  || (Story summary goes here. Format the summary like this:
+  Key items: (Item)-(purpose)
+  Key Characters: (Name)-(plot relevance)
+  Past plot: (plot so far)
+  Current arc: (what is the user doing now)
+  Future plans: (your story plans)
   
   User input:
   The current story is as follows:
